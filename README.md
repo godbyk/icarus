@@ -5,10 +5,10 @@ Since the beginning of time humans have watched birds soar through the air and h
 
 In this repository, you will find:
 
- * the Icarus source code (`src`),
- * the final report of our work (`doc/final-report`),
- * our project presentation (`doc/presentation`), and
- * our project proposal (`doc/proposal`).
+ * the Icarus source code ([`src`](src)),
+ * the final report of our work ([`doc/final-report`](doc/final-report)),
+ * our project presentation ([`doc/presentation`](doc/presentation)), and
+ * our project proposal ([`doc/proposal`](doc/proposal)).
 
 The project website is <http://kevin.godby.org/projects/icarus/>.
 
