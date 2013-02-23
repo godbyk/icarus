@@ -12,6 +12,6 @@ In this repository, you will find:
 
 The project website is <http://kevin.godby.org/projects/icarus/>.
 
-If you have any questions or comments about this work, please feel free to contact the authors: [Kevin Godby](mailto:kevin@godby.org), [Jesse Lane](mailto:jesse.a.lane@gmail.com), and Ethan Slattery.
+If you have any questions or comments about this work, please feel free to contact the authors: [Kevin Godby](mailto:kevin@godby.org), [Jesse Lane](mailto:jesse.a.lane@gmail.com), and [Ethan Slattery](mailto:ejslattery@gmail.com).
 
 
