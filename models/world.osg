@@ -1,0 +1,79 @@
+Group {
+  DataVariance DYNAMIC
+  name "group1"
+  nodeMask 0xffffffff
+  cullingActive TRUE
+  num_children 1
+  MatrixTransform {
+    DataVariance DYNAMIC
+    name "Plane"
+    nodeMask 0xffffffff
+    cullingActive TRUE
+    StateSet {
+      DataVariance STATIC
+      rendering_hint DEFAULT_BIN
+      renderBinMode INHERIT
+      0xba1 ON
+    }
+    referenceFrame RELATIVE
+    Matrix {
+      5 0 0 0
+      0 5 0 0
+      0 0 5 0
+      0 0 0 1
+    }
+    num_children 1
+    Geode {
+      UniqueID Geode_0
+      DataVariance DYNAMIC
+      name "Plane_geode"
+      nodeMask 0xffffffff
+      cullingActive TRUE
+      num_drawables 1
+      Geometry {
+        DataVariance DYNAMIC
+        StateSet {
+          DataVariance STATIC
+          rendering_hint OPAQUE_BIN
+          renderBinMode USE
+          binNumber 0
+          binName RenderBin
+          GL_BLEND OFF
+          Material {
+            DataVariance STATIC
+            ColorMode OFF
+            ambientColor 0.2 0.2 0.2 1
+            diffuseColor 0.8 0.8 0.8 1
+            specularColor 1 1 1 1
+            emissionColor 0 0 0 1
+            shininess 24.5961
+          }
+        }
+        useDisplayList TRUE
+        useVertexBufferObjects FALSE
+        PrimitiveSets 1
+        {
+          DrawElementsUInt QUADS 4
+          {
+            0 1 2 3 
+          }
+        }
+        VertexArray Vec3Array 4
+        {
+          1 1 0
+          -1 1 0
+          -1 -1 0
+          1 -1 0
+        }
+        NormalBinding PER_VERTEX
+        NormalArray Vec3Array 4
+        {
+          0 -0 1
+          0 -0 1
+          0 -0 1
+          0 -0 1
+        }
+      }
+    }
+  }
+}

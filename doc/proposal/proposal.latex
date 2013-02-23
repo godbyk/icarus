@@ -1,0 +1,251 @@
+\documentclass{article}
+
+\usepackage{url}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mathpazo}
+\usepackage{palatino}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{setspace}
+
+\onehalfspacing
+%\renewcommand{\baselinestretch}{2}	% double-space
+
+\begin{document}
+
+\title{Icarus\\Project Proposal} % FIXME: project name?
+\author{Kevin Godby, Jesse Lane, and Ethan Slattery}
+\date{\today}
+\maketitle
+{\center Human--Computer Interaction Program\\Iowa State University\\Ames, Iowa\\}
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introduction}
+% abstract, summary
+% demonstrate need for the application
+% previous approaches (if any)
+% related work
+% what we hope to accomplish
+% what are the benefits of this project? (i.e., why will it be better than
+%    existing stuff?)
+
+Since the beginning of time humans have watched birds soar through the air
+and have dreamed of doing the same.  However, the laws of physics have
+conspired to make that dream difficult, if not impossible, for a single human
+under his or her own power.  Fortunately, we are not constrained by
+physical law in virtual worlds so we can come close to fulfilling this
+dream for many.  Our primary objective for this project is to allow a person
+to navigate a virtual world as if they were flying by flapping their arms
+like wings.  A secondary objective for this project is to minimize the
+equipment that a user must interact with in order to experience
+self-powered flight.  Ideally the user will be able to enter a virtual
+reality CAVE, start the program and fly.  There are some technological
+hurdles that may keep us from this ideal but we are sure we can come very
+close.
+
+There are many possible benefits to this project---the most obvious being the
+``cool factor.''  Another is the incorporation of physical activity into a
+traditionally passive activity like playing video games.  Also, this
+project allows us to hone the skills we are learning in HCI~575x.
+
+Previous work in capturing the user's motion to produce changes in a
+virtual world has primarily concentrated on outfitting the user with a set
+of sensors or markers.  There are very good reasons for adopting this
+approach.  Currently these methods are very accurate and most can operate
+in the full three dimensions of space.  Requiring the user to don a sensor
+harness in order to interact with a virtual reality program is cumbersome
+and in some applications, such as those with a high user throughput,
+impractical.  We hope that our method will lead to an unencumbered
+experience for CAVE users.
+
+\begin{figure}[ht]
+\begin{center}
+%\resizebox{\columnwidth}{!}{\includegraphics{images/Landon-IcarusandDaedalus.jpg}}
+\includegraphics{images/Landon-IcarusandDaedalus.jpg}
+\end{center}
+\caption{Icarus and Daedelus}
+\label{fig:icarus}
+\end{figure}
+
+
+\section{Methods}
+% equipment to be used
+% algorithms and data structures
+% data flow, user interfaces, etc.
+% include any images, diagrams, mock-ups, etc.
+We will be using VR Juggler in conjunction with OpenSceneGraph for
+rendering our virtual environment.  For vision processing we will be using
+the OpenCV library.  We will use the webcam to capture video of the user
+from behind.  We will segment the person from the background and threshold
+the image.  Next we will skeletonize the region that represents the user's
+silhouette.  From the skeleton we will extract the position of the arms as
+vectors.  The arm vectors will be sent via a TCP/IP socket to the virtual
+reality cluster.  Using these vectors we will calculate thrust forces in a
+very simplified model of flight.  See figure~\ref{fig:data-flow} for a diagram
+of this data-flow.
+
+\begin{figure}[ht]
+\begin{center}
+\resizebox{\columnwidth}{!}{\includegraphics{images/data-flow.png}}
+%\includegraphics{images/data-flow.png}
+\end{center}
+\caption{A diagram of the data flow.} 
+\label{fig:data-flow}
+\end{figure}
+
+
+\subsection{Equipment}
+Equipment to be used will consist of three main pieces.  The C4 virtual
+reality environment at Iowa State University, a camera set up to block out
+visible light and let infrared light pass, and finally an infrared light
+source.
+
+The first item, the C4 virtual reality environment, comes as is, with a
+choice of setup in either a \textsf{U}-shape or in a long wall.  The
+environment will be set up in the \textsf{U}-shape to give the user a four
+sided (three walls and the floor) virtual environment in order to navigate.
+This also allows for a convenient place to view the user in the scene.  The
+camera and IR light source will be setup to view the back of the user so
+that arm movements and overall body position can be easily captured.  The
+C4 is being utilized mainly because of its availability over the similar
+six sided virtual environment known as the C6.  The C6 will be undergoing a
+full rebuild and thus will be unavailable for use for a majority of the
+time in which this project is taking place.
+
+To view the user as they interact with the virtual scene, a camera will be
+set up to view the users from behind, as mentioned above.  The camera will
+utilize an IR pass filter to filter out light in the visible spectrum.  In
+its first configuration, the camera will use a piece of exposed color film
+negative to block out all visible light, but let infrared light
+pass.\footnote{See \url{http://homepage.ntlworld.com/geoff.johnson2/IR/}
+for an example of this ``hack.''} This filter method has been used
+primarily as proof for the concept of IR illumination in the C4.  The
+method was tested and agreed upon to be feasible.
+
+The camera to be used is an off the shelf Unibrain Fire-i firewire
+webcam\footnote{The specifications for this webcam are available at
+\url{http://www.unibrain.com/Products/VisionImg/Fire_i_DC.htm}} (see
+figure~\ref{fig:firewire-webcam}).  This particular camera is ideal for
+this project as it will pickup light in the infrared spectrum without
+modification.  It is also, conveniently, already purchased and not being
+used.
+
+\begin{figure}[!h!]
+\begin{center}
+%\resizebox{\columnwidth}{!}{\includegraphics{images/firewire-webcam.jpg}}
+\includegraphics{images/firewire-webcam.jpg}
+\end{center}
+\caption{Unibrain Fire-I firewire webcam}
+\label{fig:firewire-webcam}
+\end{figure}
+
+The next step is to combine an optical IR filter with a IR emitter.  It is
+important to get a filter that passes the same wavelength that the source
+emits.  The IR light emitter is a the critical piece of equipment for this
+project to function correctly.  We will need a light source that does not
+emit any light in the visible spectrum but also needs to be bright enough
+to illuminate the entire C4 environment with IR light.  To do this an
+special lamp will need to be purchased.  These generally consist of a large
+number (20 to 100) super bright light emitting diodes.  Commercial products
+which advertise an illumination range of 20 to 30 feet will be sufficient.
+These are commonly used in outdoor security systems, in conjunction with an
+IR camera, to view ones surroundings in complete darkness.
+
+One additional piece of equipment that may be needed, in the case of poor
+IR illumination, is a reflective jacket.  This will aid in the reflection
+of IR light and make it easy for the camera to pick up user movement.  The
+use of more reflective material will have to be determined experimentally
+once both the filter and light source are purchased.  See
+figure~\ref{fig:setup} for a diagram of our equipment setup.
+
+\begin{figure}[ht]
+\begin{center}
+\resizebox{\columnwidth}{!}{\includegraphics{images/setupdiagram.jpg}}
+%\includegraphics{images/setupdiagram.jpg}
+\end{center}
+\caption{A diagram of our equipment setup.  We will provide the laptop,
+webcam, and IR light source.} 
+\label{fig:setup}
+\end{figure}
+
+
+\section{Evaluation}
+For overall testing of The Icarus Project, we will need to split into two
+modules: virtual reality and user input.  
+
+For testing the virtual reality module, we will simply need to be able to
+navigate a three dimensional environment using conventional user input.
+This will primarily consist of a keyboard and mouse combination, similar
+to any 3D game.
+
+To test the user input, which will ultimately be based on gesture
+recognition, we will use a separate system built on a laptop.  This will
+allow us to test the gestures in environments outside of the C4.  The most
+important item to the project will be the proper detection of movement in
+the users arms, thus this aspect will be heavily tested both in and out of
+the C4 environment.  To test this, the computer vision algorithm will need
+to be continually tweaked until it reliably and accurately detects motion
+in the user.
+
+\subsection{Participants}
+Participants of the test should include a variety of individuals in
+differing in both size and skin color.  The goal of this project is not to
+have this work for only one person, but to have a wide variety of
+individuals step into the C4 and start flying, without any customization
+and little added to the user in terms of attached sensors.  That being
+said, a reflective jacket may need to be worn by the user if they are
+wearing clothing that is not reflective in the IR light spectrum.
+
+\subsection{The Definition of Success}
+In this project, success will be defined as by a successful flight in
+a virtual environment by arm movement.  For the virtual reality module
+to be successful, the user will need to navigate the environment with
+ease, without any abnormalities in the graphics.  The user input
+module will be a success if we can capture and detect user arm
+movement and map that into control commands for the virtual
+environment.  If each module is working correctly, and communicating
+with each other, then the overall project, of a simulated bird flight,
+will be a success.
+
+\subsection{Possible Improvements}
+If it turns out that the IR illumination is not as successful as
+hoped, the user may be required to wear some IR reflective clothing
+while interacting with the project.  Another addition to the project
+would include an additional camera to view the user from above.  By
+adding an additional camera, the user can be better tracked and more
+motions detected.  This will enhance the users experience in the
+project by providing more control inputs.
+
+\section{Qualifications}
+% previous experience (why are we qualified to do this?)
+\subsection{Ethan Slattery}
+Ethan has an undergraduate degree in Computer Engineering from Iowa State
+University and has worked with electronics for a number of years.  As far as
+computer vision goes, the only experience that he he admits to is what has been
+taught in class up to this point.  He also has access to a large machine
+shop and can make things utilizing that resource if need be.
+
+\subsection{Kevin Godby}
+Kevin has bachelor of arts degrees in psychology and technology management,
+an associate of applied science degree in computer systems/networks, and is
+currently a PhD student in the Human--Computer Interaction program.  
+
+\subsection{Jesse Lane}
+Jesse has bachelor of science degrees in computer science and mathematics from Iowa
+State University and is a first year PhD student in Human--Computer
+Interaction, also at ISU.  Jesse has been programming for more years than
+he would like to admit and is proficient in a number of languages
+including Java and C/C++ (the language this project will be developed in).
+For the last year he has been working on a virtual combine simulation in
+partnership with John Deere using VR Juggler and the actual combine input
+hardware.
+
+%\bibliographystyle{plain}	% or ``unsrt'', ``alpha'', ``abbrv'', etc.
+%\bibliography{proposal}		% use data in file ``proposal.bib''
+
+
+\end{document}

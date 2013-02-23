@@ -1,0 +1,33 @@
+# vim:shiftwidth=4:tabstop=4:expandtab:filetype=python:nowrap
+
+Import('*')
+env = baseEnv.Copy()
+#Export('baseEnv')
+
+# Objects
+socket_o = env.Object('Socket.cpp')
+clientsocket_o = env.Object('ClientSocket.cpp')
+serversocket_o = env.Object('ServerSocket.cpp')
+blob_o = env.Object('blob.cpp')
+blobextraction_o = env.Object('blobextraction.cpp')
+blobresult_o = env.Object('blobresult.cpp')
+
+# Camera client
+cc_src = """
+    cam-client.cpp 
+    blob.o 
+    blobextraction.o
+    blobresult.o 
+    ClientSocket.o 
+    Socket.o 
+""".split()
+cam_client = env.Program('cam-client', source=cc_src)
+
+# Simple client test program
+simple_client = env.Program('simple_client', ['simple_client_main.cpp', 'ClientSocket.o', 'Socket.o'])
+
+# Simple server test program
+simple_server = env.Program('simple_server', ['simple_server_main.cpp', 'ServerSocket.o', 'Socket.o'])
+
+# TODO Alias('clean', clean)
+# clean = Action("rm -f $(PROG) *.o simple_client_main simple_server_main")

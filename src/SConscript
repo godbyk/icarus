@@ -1,0 +1,55 @@
+# vim:shiftwidth=4:tabstop=4:expandtab:filetype=python:nowrap
+
+Import('*')
+env = baseEnv.Copy()
+Export('baseEnv')
+
+CPPPATH = env['CPPPATH']
+CPPPATH.extend(['cam-client'])
+
+# TODO include $(VJ_BASE_DIR)/share/vrjuggler/vrj.appdefs.mk
+# TODO include $(DZR_BASE_DIR)/ext/vrjuggler/dzr.vrjuggler.glapp.mk
+# TODO include $(DZR_BASE_DIR)/ext/tweek/dzr.tweek.mk
+
+# TODO EXTRA_INCLUDES+=	-I$(OSGHOME)/include -I./include
+# TODO EXTRA_LIBS+=		-L$(OSGHOME)/lib -L/usr/lib -losg -losgDB -losgGA -losgUtil -lOpenThreads -lopal-ode
+
+# Objects
+fnv_o = env.Object('findnodevisitor.cpp')
+
+# Icarus
+icarus_src = """
+    icarus.cpp 
+    main.cpp 
+    terrain.cpp 
+    graphicsobject.cpp 
+    physicsobject.cpp 
+    box.cpp 
+    findnodevisitor.o 
+    user.cpp 
+    cam-client/Socket.o 
+    cam-client/ClientSocket.o
+""".split()
+icarus = env.Program(target = 'icarus', source = icarus_src)
+
+# Blender2OSGStripper
+b2o_src = "blender2osgstripper.cpp findnodevisitor.o".split()
+b2o_libs = "osg osgDB osgGA osgUtil".split()
+blender2osgstripper = env.Program('blender2osgstripper', source=b2o_src, LIBS=b2o_libs)
+
+# Mesh test
+mt_src = 'meshtest.cpp findnodevisitor.o'.split()
+mt_lib = 'osg osgDB osgGA osgUtil opal-ode'.split()
+meshtest = env.Program('meshtest', source=mt_src, LIBS=mt_lib)
+
+# OPAL test
+opaltest = env.Program('opaltest', ['opal-test.cpp'], LIBS=['opal-ode'])
+
+# PhidgetFlapper
+pf_src = 'phidgetflapper.cpp cam-client/Socket.o cam-client/ClientSocket.o'.split()
+phidgetflapper = env.Program('phidgetflapper', source=pf_src)
+
+# TODO Alias('clean', clean)
+# TODO CLEAN_FILES+=	$(OBJS), $(APP_NAME) bin/blender2osgstripper
+
+SConscript(dirs = ['cam-client'])

@@ -1,0 +1,11 @@
+# vim:shiftwidth=4:tabstop=4:expandtab:ft=python
+
+env = Environment(platform = 'posix',
+    tools = ['pdflatex', 'latex']
+)
+
+# Build pdf
+#env.DVI(target = 'proposal.dvi', source = ['proposal.latex'])
+env.PDF(target = 'proposal.pdf', source = ['proposal.latex'])
+env.PDF(target = 'proposal.pdf', source = ['proposal.latex'])
+
